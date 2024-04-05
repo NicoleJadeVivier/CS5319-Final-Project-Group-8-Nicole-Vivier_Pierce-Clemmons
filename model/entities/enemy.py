@@ -5,8 +5,8 @@ from .bullet import Bullet
 
 class Enemy:
     def __init__(self, x, y, speed):
-        self.image = pygame.Surface((40, 25))
-        self.image.fill((255, 0, 0))
+        self.image = pygame.image.load('././graphics/enemyShip.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (70, 50))
         self.pos = self.image.get_rect(center=(x, y))
         self.speed = speed
 
