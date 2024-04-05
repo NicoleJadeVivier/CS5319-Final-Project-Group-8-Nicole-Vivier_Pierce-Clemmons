@@ -4,6 +4,16 @@ from .entities.enemy import Enemy
 
 class GameModel:
     def __init__(self):
+        self.state = 'start'
+        self.player = Player()
+        self.enemies = []
+        self.player_bullets = []
+        self.enemy_bullets = []
+        self.score = 0
+        self.game_over = False
+
+    def start_game(self):
+        self.state = 'playing'
         self.player = Player()
         self.enemies = [Enemy(x, 100 + 40 * y, 0.5 if x % 2 == 0 else -0.5) for x in range(50, 750, 100) for y in range(3)]
         self.player_bullets = []
@@ -12,7 +22,7 @@ class GameModel:
         self.game_over = False
 
     def update(self):
-        if self.game_over:
+        if self.state != 'playing' or self.game_over:
             return
 
         self.player.update()
@@ -30,6 +40,7 @@ class GameModel:
 
         if not self.enemies:
             self.game_over = True
+            self.state = 'game_over'
             return
 
         for enemy in self.enemies.copy():
@@ -43,6 +54,7 @@ class GameModel:
             bullet.update()
             if bullet.collides_with(self.player):
                 self.game_over = True
+                self.state = "game_over"
                 return
             if bullet.is_out_of_bounds():
                 self.enemy_bullets.remove(bullet)
