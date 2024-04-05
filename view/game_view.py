@@ -9,7 +9,7 @@ class GameView:
         self.play_again_font = pygame.font.Font(None, 36)
         self.score_font = pygame.font.Font(None, 36)
         self.play_again_rect = pygame.Rect(310, 340, 200, 50)
-        self.start_button_rect = pygame.Rect(300, 250, 200, 50)
+        self.start_button_rect = pygame.Rect(300, 250, 215, 50)
         self.model = None
 
         self.logo_image = pygame.image.load('././graphics/galagaLogo.png').convert_alpha()
@@ -26,12 +26,13 @@ class GameView:
             self.screen.blit(self.logo_image, self.logo_pos)
 
             start_text = self.game_over_font.render('Start Game', True, (255, 255, 255))
-            pygame.draw.rect(self.screen, (0, 128, 0), self.start_button_rect)  # Button background
+            pygame.draw.rect(self.screen, (64, 224, 208), self.start_button_rect)  # Button background
             self.screen.blit(start_text, (self.start_button_rect.x + 20, self.start_button_rect.y + 10))
             mouse_pos = pygame.mouse.get_pos()
 
             if self.start_button_rect.collidepoint(mouse_pos):
-                pygame.draw.rect(self.screen, (100, 100, 100), self.start_button_rect)  # Highlight background
+                pygame.draw.rect(self.screen, (0, 0, 0), self.start_button_rect)  # Highlight background
+                self.screen.blit(start_text, (self.start_button_rect.x + 20, self.start_button_rect.y + 10))
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
             else:
                 pygame.draw.rect(self.screen, (0, 0, 0), self.play_again_rect)
