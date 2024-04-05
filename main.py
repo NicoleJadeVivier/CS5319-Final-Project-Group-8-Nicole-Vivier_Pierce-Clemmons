@@ -6,8 +6,11 @@ from controller.game_controller import GameController
 
 def main():
     pygame.init()
+
+    view = GameView()
     model = GameModel()
-    view = GameView(model)
+    view.set_model(model)
+
     controller = GameController(model, view)
 
     clock = pygame.time.Clock()

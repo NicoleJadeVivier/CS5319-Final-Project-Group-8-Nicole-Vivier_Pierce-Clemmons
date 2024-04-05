@@ -2,14 +2,18 @@ import pygame
 
 
 class GameView:
-    def __init__(self, model):
-        self.model = model
+    def __init__(self):
         pygame.display.set_caption("Galaga")
         self.screen = pygame.display.set_mode((800, 600))
         self.font = pygame.font.Font(None, 36)
         self.button_font = pygame.font.Font(None, 48)
         self.play_again_rect = pygame.Rect(300, 400, 200, 50)
         self.start_button_rect = pygame.Rect(300, 250, 200, 50)
+        self.model = None
+
+    def set_model(self, model):
+        self.model = model
+
 
     def render(self):
         self.screen.fill((0, 0, 0))

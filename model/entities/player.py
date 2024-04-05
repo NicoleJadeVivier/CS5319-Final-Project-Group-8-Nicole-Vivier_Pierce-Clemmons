@@ -4,8 +4,8 @@ from .bullet import Bullet
 
 class Player:
     def __init__(self):
-        self.image = pygame.Surface((50, 30))
-        self.image.fill((0, 255, 0))
+        self.image = pygame.image.load('././graphics/playerShip.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (50, 30))
         self.pos = self.image.get_rect(center=(400, 550))
         self.speed = 5
         self.moving_left = False
@@ -25,3 +25,8 @@ class Player:
 
     def shoot(self):
         return Bullet(self.pos.centerx, self.pos.top, -1)
+
+    def initialize_graphic(self):
+        self.image = pygame.image.load('././graphics/playerShip.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (50, 30))
+        self.pos = self.image.get_rect(center=(400, 550))
