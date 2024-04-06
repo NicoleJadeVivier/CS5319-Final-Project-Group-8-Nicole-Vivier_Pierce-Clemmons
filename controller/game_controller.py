@@ -6,36 +6,36 @@ class GameController:
         self.model = model
         self.view = view
 
-    def handle_events(self):
+    def handle_events(self, player, model):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
 
-            if self.model.state == 'start':
+            if model.state == 'start':
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.view.is_over_start(event.pos):
                         self.model.start_game()
 
-            elif self.model.state == 'playing':
+            elif model.state == 'playing':
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
-                        self.model.player.moving_left = True
+                        player.moving_left = True
                     elif event.key == pygame.K_RIGHT:
-                        self.model.player.moving_right = True
+                        player.moving_right = True
                     elif event.key == pygame.K_SPACE:
                         self.model.shoot()
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
-                        self.model.player.moving_left = False
+                        player.moving_left = False
                     elif event.key == pygame.K_RIGHT:
-                        self.model.player.moving_right = False
-            elif self.model.state == 'game_over':
+                        player.moving_right = False
+                
+            elif model.state == 'game_over':
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.view.is_over_button(event.pos):
-                        self.reset_game()
+                        self.reset_game(model)
 
-    def reset_game(self):
+    def reset_game(self, model):
         # Reset the game model to its initial state
-        self.model.__init__()
-        self.model.start_game()
+        model.start_game()

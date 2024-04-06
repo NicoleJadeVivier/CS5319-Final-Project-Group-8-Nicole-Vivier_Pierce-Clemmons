@@ -3,21 +3,23 @@ from .entities.enemy import Enemy
 
 
 class GameModel:
-    def __init__(self):
+    def __init__(self, player, enemies,player_bullets,enemy_bullets):
         self.state = 'start'
-        self.player = Player()
-        self.enemies = []
-        self.player_bullets = []
-        self.enemy_bullets = []
+        self.player = player
+        self.enemies = enemies
+        self.player_bullets = player_bullets
+        self.enemy_bullets = enemy_bullets
         self.score = 0
         self.game_over = False
 
     def start_game(self):
         self.state = 'playing'
-        self.player = Player()
-        self.enemies = [Enemy(x, 100 + 40 * y, 0.5 if x % 2 == 0 else -0.5) for x in range(50, 750, 100) for y in range(3)]
-        self.player_bullets = []
-        self.enemy_bullets = []
+        spawn_enemies = [Enemy(x, 100 + 40 * y, 0.5 if x % 2 == 0 else -0.5) for x in range(50, 750, 100) for y in range(3)]
+        del self.enemies[:]
+        for enemy in spawn_enemies:
+            self.enemies.append(enemy)
+        del self.enemy_bullets[:]
+        del self.player_bullets[:]
         self.score = 0
         self.game_over = False
 
@@ -25,9 +27,7 @@ class GameModel:
         if self.state != 'playing' or self.game_over:
             return
 
-        self.player.update()
         for bullet in self.player_bullets.copy():
-            bullet.update()
             if bullet.is_out_of_bounds():
                 self.player_bullets.remove(bullet)
             else:
@@ -39,19 +39,12 @@ class GameModel:
                         break
 
         if not self.enemies:
-            self.game_over = True
-            self.state = 'game_over'
-            return
-
-        for enemy in self.enemies.copy():
-            bullet = enemy.update()
-            if bullet:
-                self.enemy_bullets.append(bullet)
-            if enemy.is_out_of_bounds():
-                enemy.change_direction()
+            spawn_enemies = [Enemy(x, 100 + 40 * y, speed=self.score/400) for x in range(50, 750, 100) for y in range(3)]
+            for enemy in spawn_enemies:
+                self.enemies.append(enemy)
+            return            
 
         for bullet in self.enemy_bullets.copy():
-            bullet.update()
             if bullet.collides_with(self.player):
                 self.game_over = True
                 self.state = "game_over"

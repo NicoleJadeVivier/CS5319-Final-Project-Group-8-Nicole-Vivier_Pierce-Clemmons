@@ -41,7 +41,7 @@ class GameView:
         elif self.model.state == 'playing':
             self.screen.blit(self.model.player.image, self.model.player.pos)
             for enemy in self.model.enemies:
-                self.screen.blit(enemy.image, enemy.pos)
+              self.screen.blit(enemy.image, enemy.pos)
             for bullet in self.model.player_bullets + self.model.enemy_bullets:
                 self.screen.blit(bullet.image, bullet.pos)
 
