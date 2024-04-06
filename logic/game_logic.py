@@ -1,8 +1,7 @@
-from .entities.player import Player
-from .entities.enemy import Enemy
+from entities.enemy import Enemy
 
 
-class GameModel:
+class GameLogic:
     def __init__(self, player, enemies,player_bullets,enemy_bullets):
         self.state = 'start'
         self.player = player

@@ -1,10 +1,10 @@
 import pygame
-from model.game_model import GameModel
+from logic.game_logic import GameLogic
 from view.game_view import GameView
 from controller.game_controller import GameController
-from model.entities.player import Player
-from model.entities.enemy import Enemy
-from model.entities.bullet import Bullet
+from entities.player import Player
+from entities.enemy import Enemy
+from entities.bullet import Bullet
 
 def event_controller():
     view = GameView()
@@ -12,18 +12,18 @@ def event_controller():
     enemies = []
     player_bullets = []
     enemy_bullets = []
-    model = GameModel(player,enemies,player_bullets,enemy_bullets)
-    view.set_model(model)
+    logic = GameLogic(player,enemies,player_bullets,enemy_bullets)
+    view.set_logic(logic)
     
 
-    controller = GameController(model, view)
+    controller = GameController(logic, view)
 
     clock = pygame.time.Clock()
 
 
     while True:
-        controller.handle_events(player, model)
-        model.update()
+        controller.handle_events(player, logic)
+        logic.update()
         player.update()
         for enemy in enemies.copy():
             bullet = enemy.update()
